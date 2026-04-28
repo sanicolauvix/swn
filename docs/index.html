@@ -97,12 +97,11 @@
       border-radius: 16px;
       background: var(--bg-card);
       overflow: hidden;
-      cursor: pointer;
-      transition: border-color .3s, transform .3s, box-shadow .3s;
+      cursor: default;
+      transition: border-color .3s, box-shadow .3s;
     }
     .edif-card:hover {
       border-color: var(--border-h);
-      transform: translateY(-5px);
       box-shadow: 0 28px 72px rgba(0,0,0,.5), 0 0 0 1px rgba(201,169,110,.07);
     }
 
@@ -112,6 +111,7 @@
       aspect-ratio: 16/9;
       background: var(--border);
       overflow: hidden;
+      cursor: pointer;
     }
     .edif-capa img, .edif-capa video {
       width: 100%; height: 100%;
@@ -119,8 +119,24 @@
       display: block;
       transition: transform .5s ease;
     }
-    .edif-card:hover .edif-capa img,
-    .edif-card:hover .edif-capa video { transform: scale(1.04); }
+    .edif-capa:hover img,
+    .edif-capa:hover video { transform: scale(1.04); }
+    .edif-capa-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .3s;
+      background: rgba(0,0,0,.2);
+    }
+    .edif-capa:hover .edif-capa-play { opacity: 1; }
+    .edif-capa-play svg {
+      width: 60px; height: 60px;
+      fill: rgba(255,255,255,.88);
+      filter: drop-shadow(0 2px 12px rgba(0,0,0,.6));
+    }
 
     .edif-capa-vazia {
       width: 100%; height: 100%;
@@ -202,8 +218,9 @@
       text-transform: uppercase;
       color: var(--text-d);
       transition: color .2s;
+      cursor: pointer;
     }
-    .edif-card:hover .edif-ver-mais { color: var(--gold); }
+    .edif-ver-mais:hover { color: var(--gold); }
     .edif-ver-mais svg {
       width: 14px; height: 14px;
       fill: none;
@@ -212,7 +229,7 @@
       stroke-linecap: round;
       transition: transform .2s;
     }
-    .edif-card:hover .edif-ver-mais svg { transform: translateX(4px); }
+    .edif-ver-mais:hover svg { transform: translateX(4px); }
 
     /* ── BACK BUTTON ── */
     .back-row {
@@ -701,10 +718,12 @@ function buildEdifCard(edif) {
     ? `<span class="edif-dispon-num">${livres}</span> apartamento${livres>1?'s':''} disponível${livres>1?'is':''} de ${total}`
     : `Nenhum apartamento disponível`;
 
+  const temMidia = edif.midia && edif.midia.length > 0;
   return `
-    <div class="edif-card" data-slug="${edif.slug}">
-      <div class="edif-capa">
+    <div class="edif-card">
+      <div class="edif-capa" data-key="${storeKey}" data-idx="0">
         ${capaHtml}
+        ${temMidia ? `<div class="edif-capa-play">${SVG_PLAY}</div>` : ''}
         <div class="edif-avail-badge ${badgeClass}">
           <span class="avail-dot"></span>${badgeText}
         </div>
@@ -712,7 +731,7 @@ function buildEdifCard(edif) {
       <div class="edif-info">
         <div class="edif-nome">${edif.nome}</div>
         <div class="edif-dispon">${disponHtml}</div>
-        <div class="edif-ver-mais">Ver apartamentos ${SVG_ARROW}</div>
+        <div class="edif-ver-mais" data-slug="${edif.slug}">Ver apartamentos ${SVG_ARROW}</div>
       </div>
     </div>`;
 }
@@ -794,10 +813,18 @@ function mostrarEdificio(slug) {
 
 /* ── CLICK DELEGATION ── */
 document.getElementById('app').addEventListener('click', function(e) {
-  // clique em card de edifício
-  const edifCard = e.target.closest('.edif-card');
-  if (edifCard) { mostrarEdificio(edifCard.dataset.slug); return; }
-  // clique em mídia de apartamento
+  // clique na capa do edifício → lightbox com video/foto do prédio
+  const edifCapa = e.target.closest('.edif-capa[data-key]');
+  if (edifCapa) {
+    const key = edifCapa.dataset.key;
+    if (window._store[key] && window._store[key].length) {
+      lbOpen(key, 0); return;
+    }
+  }
+  // clique em "Ver apartamentos" → navega
+  const verMais = e.target.closest('.edif-ver-mais[data-slug]');
+  if (verMais) { mostrarEdificio(verMais.dataset.slug); return; }
+  // clique em mídia de apartamento → lightbox
   const mi = e.target.closest('.mi');
   if (mi) { lbOpen(mi.dataset.key, parseInt(mi.dataset.idx)); return; }
 });
