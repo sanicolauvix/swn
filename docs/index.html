@@ -681,10 +681,10 @@ function buildEdifCard(edif) {
   const storeKey = `edif__${edif.slug}`;
   window._store[storeKey] = edif.midia || [];
 
-  // capa: primeira mídia ou placeholder
+  // capa: prefere video; fallback para foto ou placeholder
   let capaHtml = '';
   if (edif.midia && edif.midia.length) {
-    const m = edif.midia[0];
+    const m = edif.midia.find(x => x.tipo === 'video') || edif.midia[0];
     capaHtml = m.tipo === 'video'
       ? `<video src="${m.src}" muted loop autoplay playsinline></video>`
       : `<img src="${m.src}" alt="${edif.nome}">`;
