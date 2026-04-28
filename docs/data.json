@@ -26,7 +26,12 @@
             "Agua e luz inclusos",
             "maximo 4 pessoas"
           ],
-          "midia": []
+          "midia": [
+            {
+              "tipo": "video",
+              "src": "media/universal/apto_103/whatsapp_video_2026_04_28_at_05_35_59.mp4"
+            }
+          ]
         },
         {
           "numero": "203",
@@ -68,10 +73,6 @@
             "maximo 3 pessoas"
           ],
           "midia": [
-            {
-              "tipo": "video",
-              "src": "media/universal/apto_106/whatsapp_video_2026_04_28_at_05_35_59.mp4"
-            },
             {
               "tipo": "video",
               "src": "media/universal/apto_106/whatsapp_video_2026_04_28_at_05_36_02.mp4"
