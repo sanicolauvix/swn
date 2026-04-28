@@ -1,0 +1,30 @@
+{
+  "edificios": [
+    {
+      "nome": "Universal",
+      "slug": "universal",
+      "apartamentos": [
+        {
+          "numero": "103",
+          "status": "livre",
+          "midia": []
+        },
+        {
+          "numero": "105",
+          "status": "livre",
+          "midia": []
+        },
+        {
+          "numero": "203",
+          "status": "livre",
+          "midia": []
+        },
+        {
+          "numero": "204",
+          "status": "ocupado",
+          "midia": []
+        }
+      ]
+    }
+  ]
+}
