@@ -45,7 +45,12 @@
             "Agua e luz inclusos",
             "maximo 3 pessoas"
           ],
-          "midia": []
+          "midia": [
+            {
+              "tipo": "video",
+              "src": "media/universal/apto_203/video_apresentacao.mp4"
+            }
+          ]
         },
         {
           "numero": "204",
