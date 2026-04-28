@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card — Imóveis SWN</title>
+  <style>
+    body { margin: 0; background: #111; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Georgia', serif; }
+    a { text-decoration: none; }
+    .card {
+      width: 340px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+      background: #141414;
+      box-shadow: 0 24px 64px rgba(0,0,0,.7);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 40px 80px rgba(0,0,0,.8), 0 0 0 1px rgba(201,169,110,.15);
+    }
+    .card-img {
+      width: 100%; aspect-ratio: 16/9;
+      object-fit: cover; display: block;
+      filter: brightness(.85);
+      transition: filter .3s;
+    }
+    .card:hover .card-img { filter: brightness(1); }
+    .card-body { padding: 22px 24px 26px; }
+    .card-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C9A96E; margin-bottom: 6px;
+    }
+    .card-title {
+      font-size: 26px; font-weight: 700;
+      color: #EEEAE4; letter-spacing: .5px;
+      margin-bottom: 8px; line-height: 1.1;
+    }
+    .card-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; color: #7a746e;
+      line-height: 1.5; margin-bottom: 20px;
+    }
+    .card-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #C9A96E; color: #0a0a0a;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 12px 22px; border-radius: 100px;
+      transition: background .2s, gap .2s;
+    }
+    .card:hover .card-btn { background: #E8D5AA; gap: 12px; }
+    .card-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
+  </style>
+</head>
+<body>
+<a href="https://sanicolauvix.github.io/swn/" target="_blank" rel="noopener">
+  <div class="card">
+    <img class="card-img"
+         src="https://sanicolauvix.github.io/swn/media/universal/_capa/whatsapp_image_2026_04_28_at_05_50_33.jpeg"
+         alt="Imóveis SWN">
+    <div class="card-body">
+      <div class="card-label">Imóveis</div>
+      <div class="card-title">SWN</div>
+      <div class="card-desc">Apartamentos disponíveis para alugar.<br>Água e luz inclusos.</div>
+      <div class="card-btn">
+        Ver apartamentos
+        <svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg>
+      </div>
+    </div>
+  </div>
+</a>
+</body>
+</html>
