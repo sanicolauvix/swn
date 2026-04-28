@@ -522,13 +522,20 @@
     }
     #lb.open { opacity: 1; pointer-events: all; }
     #lb-content {
-      max-width: min(92vw, 1100px); max-height: 88vh;
+      width: min(92vw, 1100px);
+      max-height: 88vh;
       display: flex; align-items: center; justify-content: center;
     }
-    #lb-content img, #lb-content video {
+    #lb-content img {
       max-width: 100%; max-height: 88vh;
       border-radius: 10px; object-fit: contain;
       box-shadow: 0 32px 96px rgba(0,0,0,.7);
+    }
+    #lb-content video {
+      width: 100%; max-height: 88vh;
+      border-radius: 10px;
+      box-shadow: 0 32px 96px rgba(0,0,0,.7);
+      background: #000;
     }
     .lb-btn {
       position: fixed;
@@ -655,9 +662,13 @@ function lbNav(d) {
 function _render() {
   const item = _LB.items[_LB.idx];
   const c = document.getElementById('lb-content');
-  c.innerHTML = item.tipo === 'video'
-    ? `<video src="${item.src}" controls autoplay></video>`
-    : `<img src="${item.src}" alt="Foto">`;
+  if (item.tipo === 'video') {
+    c.innerHTML = `<video src="${item.src}" controls playsinline></video>`;
+    const v = c.querySelector('video');
+    v.play().catch(() => {});
+  } else {
+    c.innerHTML = `<img src="${item.src}" alt="Foto">`;
+  }
   const total = _LB.items.length;
   document.getElementById('lb-counter').textContent = total > 1 ? `${_LB.idx+1} / ${total}` : '';
   document.getElementById('lb-prev').style.display = total > 1 ? '' : 'none';
