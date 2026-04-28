@@ -31,18 +31,51 @@ def slugify(s: str) -> str:
     s = re.sub(r"[^a-z0-9]+", "_", s.lower()).strip("_")
     return s
 
+_CARAC = {"quarto", "sala", "cozinha", "banheiro", "suite", "suíte",
+          "varanda", "garagem", "area comum", "área comum", "area social"}
+
+def _e_caracteristica(ln: str) -> bool:
+    lower = ln.lower()
+    return any(k in lower for k in _CARAC)
+
 def ler_status(path: Path) -> dict:
-    status = {}
+    """
+    Retorna dict com info completa de cada apto:
+      {
+        "103": {
+          "status":    "livre",
+          "valor":     "R$ 950,00",
+          "condicoes": ["Agua e luz inclusos", "maximo 4 pessoas"]
+        }
+      }
+    Formato do status.txt:
+      103 - livre
+            Valor R$ 950,00
+            Agua e luz inclusos
+      204 - ocupado
+    """
+    result  = {}
+    current = None
     if not path.exists():
-        return status
+        return result
     for ln in path.read_text(encoding="utf-8").splitlines():
-        ln = ln.strip()
-        if not ln:
+        stripped = ln.strip()
+        if not stripped:
             continue
-        m = re.match(r"(\d+)\s*[-:]\s*(\w+)", ln)
+        m = re.match(r"(\d+)\s*[-:]\s*(\w+)", stripped)
         if m:
-            status[m.group(1)] = m.group(2).lower()
-    return status
+            current = m.group(1)
+            result[current] = {"status": m.group(2).lower(), "valor": "",
+                               "caracteristicas": [], "condicoes": []}
+        elif current:
+            vm = re.match(r"valor\s+(.*)", stripped, re.IGNORECASE)
+            if vm:
+                result[current]["valor"] = vm.group(1).strip()
+            elif _e_caracteristica(stripped):
+                result[current]["caracteristicas"].append(stripped)
+            else:
+                result[current]["condicoes"].append(stripped)
+    return result
 
 def build():
     media_dir = DESTINO / MEDIA
@@ -60,6 +93,21 @@ def build():
         slug_edif = slugify(edif_dir.name)
         status_map = ler_status(edif_dir / "status.txt")
 
+        # midia do proprio edificio (arquivos na raiz, nao em subpastas)
+        edif_midia = []
+        dest_edif = media_dir / slug_edif / "_capa"
+        dest_edif.mkdir(parents=True, exist_ok=True)
+        for arq in sorted(edif_dir.iterdir()):
+            if not arq.is_file():
+                continue
+            ext = arq.suffix.lower()
+            if ext not in (FOTOS | VIDEOS):
+                continue
+            nome_limpo = slugify(arq.stem) + ext
+            shutil.copy2(arq, dest_edif / nome_limpo)
+            tipo = "video" if ext in VIDEOS else "foto"
+            edif_midia.append({"tipo": tipo, "src": f"{MEDIA}/{slug_edif}/_capa/{nome_limpo}"})
+
         apartamentos = []
         for apto_dir in sorted(edif_dir.iterdir()):
             if not apto_dir.is_dir():
@@ -67,8 +115,13 @@ def build():
             m = re.match(r"apto\s+(\d+)", apto_dir.name, re.IGNORECASE)
             if not m:
                 continue
-            numero = m.group(1)
-            status = status_map.get(numero, "livre")
+            numero    = m.group(1)
+            info          = status_map.get(numero, {"status": "livre", "valor": "",
+                                                     "caracteristicas": [], "condicoes": []})
+            status        = info["status"]
+            valor         = info["valor"]
+            caracteristicas = info["caracteristicas"]
+            condicoes     = info["condicoes"]
 
             midia = []
             if status != "ocupado":
@@ -90,14 +143,18 @@ def build():
                     midia.append({"tipo": tipo, "src": src_rel})
 
             apartamentos.append({
-                "numero": numero,
-                "status": status,
-                "midia":  midia,
+                "numero":         numero,
+                "status":         status,
+                "valor":          valor,
+                "caracteristicas": caracteristicas,
+                "condicoes":      condicoes,
+                "midia":          midia,
             })
 
         edificios.append({
             "nome":         nome_edif,
             "slug":         slug_edif,
+            "midia":        edif_midia,
             "apartamentos": apartamentos,
         })
 

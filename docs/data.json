@@ -3,25 +3,56 @@
     {
       "nome": "Universal",
       "slug": "universal",
+      "midia": [],
       "apartamentos": [
         {
           "numero": "103",
           "status": "livre",
+          "valor": "R$ 950,00",
+          "caracteristicas": [
+            "Dois Quartos, Cozinha e Banheiro",
+            "Area Comum Social"
+          ],
+          "condicoes": [
+            "Agua e luz inclusos",
+            "maximo 4 pessoas"
+          ],
           "midia": []
         },
         {
           "numero": "105",
           "status": "livre",
+          "valor": "R$ 750,00",
+          "caracteristicas": [
+            "Sala, 1 Quarto, Cozinha e Banheiro",
+            "Area Comum Social"
+          ],
+          "condicoes": [
+            "Agua e luz inclusos",
+            "maximo 3 pessoas"
+          ],
           "midia": []
         },
         {
           "numero": "203",
           "status": "livre",
+          "valor": "R$ 850,00",
+          "caracteristicas": [
+            "Sala, 1 Quarto, Cozinha e Banheiro,",
+            "Area Comum Social"
+          ],
+          "condicoes": [
+            "Agua e luz inclusos",
+            "maximo 3 pessoas"
+          ],
           "midia": []
         },
         {
           "numero": "204",
           "status": "ocupado",
+          "valor": "",
+          "caracteristicas": [],
+          "condicoes": [],
           "midia": []
         }
       ]
