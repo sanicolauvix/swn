@@ -3,7 +3,16 @@
     {
       "nome": "Universal",
       "slug": "universal",
-      "midia": [],
+      "midia": [
+        {
+          "tipo": "foto",
+          "src": "media/universal/_capa/whatsapp_image_2026_04_28_at_05_50_33.jpeg"
+        },
+        {
+          "tipo": "video",
+          "src": "media/universal/_capa/whatsapp_video_2026_04_28_at_05_50_32.mp4"
+        }
+      ],
       "apartamentos": [
         {
           "numero": "103",
@@ -45,6 +54,29 @@
           "caracteristicas": [],
           "condicoes": [],
           "midia": []
+        },
+        {
+          "numero": "106",
+          "status": "livre",
+          "valor": "R$ 750,00",
+          "caracteristicas": [
+            "Sala, 1 Quarto, Cozinha e Banheiro",
+            "Area Comum Social"
+          ],
+          "condicoes": [
+            "Agua e luz inclusos",
+            "maximo 3 pessoas"
+          ],
+          "midia": [
+            {
+              "tipo": "video",
+              "src": "media/universal/apto_106/whatsapp_video_2026_04_28_at_05_35_59.mp4"
+            },
+            {
+              "tipo": "video",
+              "src": "media/universal/apto_106/whatsapp_video_2026_04_28_at_05_36_02.mp4"
+            }
+          ]
         }
       ]
     }

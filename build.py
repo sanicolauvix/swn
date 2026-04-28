@@ -112,7 +112,7 @@ def build():
         for apto_dir in sorted(edif_dir.iterdir()):
             if not apto_dir.is_dir():
                 continue
-            m = re.match(r"apto\s+(\d+)", apto_dir.name, re.IGNORECASE)
+            m = re.match(r"apto\s*(\d+)", apto_dir.name, re.IGNORECASE)
             if not m:
                 continue
             numero    = m.group(1)
