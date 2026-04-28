@@ -522,18 +522,13 @@
     }
     #lb.open { opacity: 1; pointer-events: all; }
     #lb-content {
-      width: min(92vw, 1100px);
+      max-width: min(92vw, 1100px);
       max-height: 88vh;
       display: flex; align-items: center; justify-content: center;
     }
-    #lb-content img {
+    #lb-content img, #lb-content video {
       max-width: 100%; max-height: 88vh;
       border-radius: 10px; object-fit: contain;
-      box-shadow: 0 32px 96px rgba(0,0,0,.7);
-    }
-    #lb-content video {
-      width: 100%; max-height: 88vh;
-      border-radius: 10px;
       box-shadow: 0 32px 96px rgba(0,0,0,.7);
       background: #000;
     }
@@ -730,9 +725,13 @@ function buildEdifCard(edif) {
     : `Nenhum apartamento disponível`;
 
   const temMidia = edif.midia && edif.midia.length > 0;
+  const coverIdx = temMidia
+    ? (edif.midia.findIndex(x => x.tipo === 'video') >= 0
+        ? edif.midia.findIndex(x => x.tipo === 'video') : 0)
+    : 0;
   return `
     <div class="edif-card">
-      <div class="edif-capa" data-key="${storeKey}" data-idx="0">
+      <div class="edif-capa" data-key="${storeKey}" data-idx="${coverIdx}">
         ${capaHtml}
         ${temMidia ? `<div class="edif-capa-play">${SVG_PLAY}</div>` : ''}
         <div class="edif-avail-badge ${badgeClass}">
@@ -829,7 +828,7 @@ document.getElementById('app').addEventListener('click', function(e) {
   if (edifCapa) {
     const key = edifCapa.dataset.key;
     if (window._store[key] && window._store[key].length) {
-      lbOpen(key, 0); return;
+      lbOpen(key, parseInt(edifCapa.dataset.idx || '0')); return;
     }
   }
   // clique em "Ver apartamentos" → navega
