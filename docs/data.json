@@ -1,6 +1,18 @@
 {
   "edificios": [
     {
+      "nome": ".Git",
+      "slug": "git",
+      "midia": [],
+      "apartamentos": []
+    },
+    {
+      "nome": "Docs",
+      "slug": "docs",
+      "midia": [],
+      "apartamentos": []
+    },
+    {
       "nome": "Universal",
       "slug": "universal",
       "midia": [
@@ -16,7 +28,7 @@
       "apartamentos": [
         {
           "numero": "103",
-          "status": "livre",
+          "status": "ocupado",
           "valor": "R$ 950,00",
           "caracteristicas": [
             "Dois Quartos, Cozinha e Banheiro",
@@ -26,12 +38,7 @@
             "Agua e luz inclusos",
             "maximo 4 pessoas"
           ],
-          "midia": [
-            {
-              "tipo": "video",
-              "src": "media/universal/apto_103/whatsapp_video_2026_04_28_at_05_35_59.mp4"
-            }
-          ]
+          "midia": []
         },
         {
           "numero": "203",
@@ -48,22 +55,28 @@
           "midia": [
             {
               "tipo": "video",
-              "src": "media/universal/apto_203/video_apresentacao.mp4"
+              "src": "media/universal/apto_203/whatsapp_video_2026_04_28_at_05_35_59.mp4"
             }
           ]
         },
         {
           "numero": "204",
           "status": "ocupado",
-          "valor": "",
-          "caracteristicas": [],
-          "condicoes": [],
+          "valor": "R$ 650,00",
+          "caracteristicas": [
+            "1 Quarto, Cozinha e Banheiro",
+            "Area Comum Social"
+          ],
+          "condicoes": [
+            "Agua e luz inclusos",
+            "maximo 1 pessoas"
+          ],
           "midia": []
         },
         {
           "numero": "106",
-          "status": "livre",
-          "valor": "R$ 750,00",
+          "status": "ocupado",
+          "valor": "R$ 650,00",
           "caracteristicas": [
             "Sala, 1 Quarto, Cozinha e Banheiro",
             "Area Comum Social"
@@ -72,12 +85,7 @@
             "Agua e luz inclusos",
             "maximo 3 pessoas"
           ],
-          "midia": [
-            {
-              "tipo": "video",
-              "src": "media/universal/apto_106/whatsapp_video_2026_04_28_at_05_36_02.mp4"
-            }
-          ]
+          "midia": []
         }
       ]
     }

@@ -15,7 +15,7 @@ Uso:
 Saida em docs/ (GitHub Pages source).
 """
 
-import os, re, json, shutil, unicodedata
+import os, re, json, shutil, stat, unicodedata
 from pathlib import Path
 
 ORIGEM   = Path("../swn")
@@ -65,7 +65,10 @@ def ler_status(path: Path) -> dict:
         m = re.match(r"(\d+)\s*[-:]\s*(\w+)", stripped)
         if m:
             current = m.group(1)
-            result[current] = {"status": m.group(2).lower(), "valor": "",
+            st = m.group(2).lower()
+            if st.startswith("ocup"):
+                st = "ocupado"
+            result[current] = {"status": st, "valor": "",
                                "caracteristicas": [], "condicoes": []}
         elif current:
             vm = re.match(r"valor\s+(.*)", stripped, re.IGNORECASE)
@@ -80,7 +83,10 @@ def ler_status(path: Path) -> dict:
 def build():
     media_dir = DESTINO / MEDIA
     if media_dir.exists():
-        shutil.rmtree(media_dir)
+        def _force_rm(func, path, _):
+            os.chmod(path, stat.S_IWRITE)
+            func(path)
+        shutil.rmtree(media_dir, onerror=_force_rm)
     media_dir.mkdir(parents=True, exist_ok=True)
 
     edificios = []
@@ -124,7 +130,7 @@ def build():
             condicoes     = info["condicoes"]
 
             midia = []
-            if status != "ocupado":
+            if not status.startswith("ocup"):
                 dest_apto = media_dir / slug_edif / f"apto_{numero}"
                 dest_apto.mkdir(parents=True, exist_ok=True)
 
