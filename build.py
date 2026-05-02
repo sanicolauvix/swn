@@ -92,7 +92,7 @@ def build():
     edificios = []
 
     for edif_dir in sorted(ORIGEM.iterdir()):
-        if not edif_dir.is_dir():
+        if not edif_dir.is_dir() or not (edif_dir / "status.txt").exists():
             continue
 
         nome_edif = edif_dir.name.title()

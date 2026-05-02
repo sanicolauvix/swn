@@ -1,18 +1,6 @@
 {
   "edificios": [
     {
-      "nome": ".Git",
-      "slug": "git",
-      "midia": [],
-      "apartamentos": []
-    },
-    {
-      "nome": "Docs",
-      "slug": "docs",
-      "midia": [],
-      "apartamentos": []
-    },
-    {
       "nome": "Universal",
       "slug": "universal",
       "midia": [
